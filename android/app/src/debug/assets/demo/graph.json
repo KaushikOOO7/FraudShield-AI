@@ -1,0 +1,1 @@
+{"nodes":[{"id":"message","label":"Example KYC message","kind":"app"},{"id":"domain","label":"example.invalid","kind":"domain"},{"id":"recipient","label":"Example payment handle","kind":"upi"}],"edges":[{"from":"message","to":"domain","rel":"links to"},{"from":"domain","to":"recipient","rel":"requests payment"}]}

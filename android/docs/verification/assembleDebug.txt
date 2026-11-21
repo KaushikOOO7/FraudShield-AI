@@ -1,0 +1,7 @@
+.\gradlew.bat : ERROR: JDK 17 is required. Set JAVA_HOME to your JDK 17 installation. 
+At line:2 char:1
++ .\gradlew.bat assembleDebug 2>&1 | Tee-Object -FilePath docs/verifica ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ERROR: JDK 17 i... installation. :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

@@ -1,0 +1,3 @@
+PASS: 61 Kotlin source files checked; 14 destinations; 281 resources in each of en/hi/kn; five verdict fixtures.
+PASS: Phase 2 service guards, opaque encrypted queue, consent boundaries and non-blocking caller policy inspected.
+Source invariants only. Kotlin compilation, Android resource compilation and device behavior remain unverified.

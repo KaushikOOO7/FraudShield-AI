@@ -1,0 +1,47 @@
+[
+  {
+    "case_id": "DEMO-KYC", "type": "sms", "created_at": "2026-11-21T08:30:00Z",
+    "verdict": "HIGH_RISK", "risk_score": 92, "confidence": 0.94,
+    "agent_findings": [
+      {"agent": "Message", "status": "HIGH", "detail": "This example uses urgent KYC and account-blocking language.", "signals": ["Asks for an OTP", "Pressures the recipient to act immediately"]},
+      {"agent": "Link", "status": "HIGH", "detail": "The example URL is not an official bank domain.", "signals": ["Synthetic domain for demonstration only"]},
+      {"agent": "Call", "status": "OK", "detail": "No incoming call was checked in this example.", "signals": []},
+      {"agent": "Behavior", "status": "SUSPICIOUS", "detail": "The message asks you to bypass the bank's normal process.", "signals": ["Requests private banking information"]}
+    ],
+    "reasons": ["This demo message asks for an OTP.", "It uses an urgent account-blocking threat.", "Check with your bank using its official app or a number on your card."],
+    "entities": {"urls": ["https://kyc-check.example.invalid"], "phones": [], "otp_request": true},
+    "actions": [{"type": "CALL_1930", "label": "Call 1930 if money was lost"}, {"type": "REPORT_NCRP", "label": "Report at cybercrime.gov.in"}, {"type": "SHARE_WARNING", "label": "Share a warning"}]
+  },
+  {
+    "case_id": "DEMO-QR", "type": "qr", "created_at": "2026-11-21T07:45:00Z",
+    "verdict": "CONFIRMED_FRAUD", "risk_score": 98, "confidence": 0.98,
+    "agent_findings": [{"agent": "Behavior", "status": "HIGH", "detail": "This synthetic case demonstrates a refund payment trap.", "signals": ["Requests payment to receive a refund"]}],
+    "reasons": ["A UPI PIN authorizes money leaving your account. You do not need it to receive money."],
+    "entities": {"urls": [], "phones": [], "otp_request": false},
+    "actions": [{"type": "CALL_1930", "label": "Call 1930"}, {"type": "FREEZE_BANK", "label": "Contact your bank"}]
+  },
+  {
+    "case_id": "DEMO-CALL", "type": "call", "created_at": "2026-11-20T15:10:00Z",
+    "verdict": "CAUTION", "risk_score": 54, "confidence": 0.66,
+    "agent_findings": [{"agent": "Call", "status": "SUSPICIOUS", "detail": "This example has limited caller reputation data.", "signals": ["Verify identity through an official number"]}],
+    "reasons": ["Caller reputation alone cannot verify a caller's identity. Do not share OTPs."],
+    "entities": {"urls": [], "phones": [], "otp_request": false},
+    "actions": [{"type": "SHARE_WARNING", "label": "Share a warning"}]
+  },
+  {
+    "case_id": "DEMO-LINK", "type": "url", "created_at": "2026-11-20T12:00:00Z",
+    "verdict": "SAFE", "risk_score": 8, "confidence": 0.85,
+    "agent_findings": [{"agent": "Link", "status": "OK", "detail": "No suspicious link signals in this synthetic example.", "signals": []}],
+    "reasons": ["No suspicious signals were found in this demo. A check cannot guarantee safety."],
+    "entities": {"urls": ["https://example.org"], "phones": [], "otp_request": false},
+    "actions": [{"type": "NONE", "label": "No immediate action suggested"}]
+  },
+  {
+    "case_id": "DEMO-VERIFIED", "type": "screenshot", "created_at": "2026-11-19T09:00:00Z",
+    "verdict": "VERIFIED", "risk_score": 3, "confidence": 0.97,
+    "agent_findings": [{"agent": "Message", "status": "OK", "detail": "This fixture demonstrates a verified-source result.", "signals": ["Synthetic verified-source metadata"]}],
+    "reasons": ["The source matched the demo's verification record. Stay cautious with requests for private information."],
+    "entities": {"urls": [], "phones": [], "otp_request": false},
+    "actions": [{"type": "NONE", "label": "No immediate action suggested"}]
+  }
+]

@@ -1,0 +1,2 @@
+PASS: 34 Kotlin source files checked; 14 destinations; 157 resources in each of en/hi/kn; five verdict fixtures.
+Source invariants only. Kotlin compilation, Android resource compilation and device behavior remain unverified.

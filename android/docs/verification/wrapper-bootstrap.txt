@@ -1,0 +1,15 @@
+powershell.exe : C:\Users\abhis\fraud\tools\Install-GradleWrapper.ps1 : Cannot bootstrap the Gradle wrapper: Unable to 
+connect to the 
+At line:2 char:1
++ powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/Install ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Users\abhis\...connect to the :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+remote server
+At C:\Users\abhis\fraud\tools\Install-GradleWrapper.ps1:23 char:5
++     Write-Error ('Cannot bootstrap the Gradle wrapper: ' + $_.Excepti ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,Install-GradleWrapper.ps1
+ 

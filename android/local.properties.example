@@ -1,0 +1,9 @@
+# Copy to local.properties; never commit local.properties.
+# Windows: use forward slashes in SDK paths.
+sdk.dir=C:/Users/YOUR_USER/AppData/Local/Android/Sdk
+BACKEND_BASE_URL=http://10.0.2.2:8000/
+# Opt in only for debug builds. Release always uses the real repository.
+DEMO_MODE=false
+# Set true only after the teammate confirms the proposed payload/auth/history schemas.
+BACKEND_CONTRACT_CONFIRMED=false
+FEEDBACK_CONTRACT_CONFIRMED=false

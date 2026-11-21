@@ -1,0 +1,17 @@
+#!/bin/sh
+# Gradle 8.7 launcher; fetch the verified official wrapper only if not bundled yet.
+set -eu
+APP_HOME=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
+if [ -n "${JAVA_HOME:-}" ]; then
+    JAVACMD="$JAVA_HOME/bin/java"
+else
+    JAVACMD=java
+fi
+if ! "$JAVACMD" -version >/dev/null 2>&1; then
+    echo 'ERROR: JDK 17 is required. Set JAVA_HOME to your JDK 17 installation.' >&2
+    exit 1
+fi
+if [ ! -f "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" ]; then
+    sh "$APP_HOME/tools/install-gradle-wrapper.sh"
+fi
+exec "$JAVACMD" ${JAVA_OPTS:-} ${GRADLE_OPTS:-} -classpath "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" org.gradle.wrapper.GradleWrapperMain "$@"

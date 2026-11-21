@@ -1,0 +1,25 @@
+JAVA_HOME and ANDROID_HOME are unset.
+Android Studio 2026.2.2 is installed.
+Installed SDK platform: android-37.0; installed Build Tools: 36.0.0.
+SDK 34 and Build Tools 34.0.0 are absent.
+local.properties contains sdk.dir only and was preserved.
+Gradle 8.7 ZIP lock and .part files exist, both zero bytes; no complete wrapper distribution.
+Gradle host connection failed in the recorded curl probe.
+java.exe : openjdk version "21.0.11" 2026-04-21
+At line:4 char:1
++ & 'C:\Users\abhis\.jdks\jbr-21.0.11\bin\java.exe' -version 2>&1 | Out ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (openjdk version "21.0.11" 2026-04-21:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+OpenJDK Runtime Environment JBR-21.0.11+1-1163.125-nomod (build 21.0.11+1-b1163.125)
+OpenJDK 64-Bit Server VM JBR-21.0.11+1-1163.125-nomod (build 21.0.11+1-b1163.125, mixed mode, sharing)
+java.exe : openjdk version "25.0.4" 2026-07-21
+At line:5 char:1
++ & 'C:\Program Files\Android\Android Studio\jbr\bin\java.exe' -version ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (openjdk version "25.0.4" 2026-07-21:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+OpenJDK Runtime Environment (build 25.0.4+-16339643-b508.27)
+OpenJDK 64-Bit Server VM (build 25.0.4+-16339643-b508.27, mixed mode)

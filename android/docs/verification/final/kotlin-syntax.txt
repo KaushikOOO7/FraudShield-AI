@@ -1,0 +1,1 @@
+Kotlin IDE syntax audit: 71 files, 0 parse errors. No typechecking, Gradle build or Android execution.
