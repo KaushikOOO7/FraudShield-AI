@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "name": "sms-spam-tfidf-logistic-regression",
+  "version": "sms-uci-tfidf-lr-v1-efcaf62d777d",
+  "task": "sms_spam_detection",
+  "artifact_file": "sms_pipeline.joblib",
+  "artifact_sha256": "b0f588b84eb01bd317bc7df8d3d49522baa39516922ab77cdd48da7ce96959d7",
+  "trained_at": "2026-11-21T04:31:38.986439+00:00",
+  "training_duration_seconds": 2.237,
+  "python_version": "3.14.4",
+  "dependencies": {
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "scipy": "1.18.1",
+    "joblib": "1.6.0"
+  },
+  "dataset": {
+    "dataset_name": "UCI SMS Spam Collection (web-exported mirror copy)",
+    "original_source": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+    "original_download_url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+    "source_doi": "10.24432/C5CC84",
+    "mirror_url": "https://raw.githubusercontent.com/veermshah/cs6350-sms-spam-dataset/main/SMSSpamCollection",
+    "acquired_at": "2026-11-21T04:22:50.545021+00:00",
+    "version": "2011 collection; 2026-11-21 web-export copy identified by SHA-256",
+    "license": "CC-BY-4.0",
+    "license_source": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+    "attribution": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. UCI Machine Learning Repository. DOI: 10.24432/C5CC84.",
+    "acquisition_method": "Connected web tool exported all 5579 displayed source lines; shell DNS prevented original ZIP download.",
+    "record_count": 5574,
+    "class_distribution": {
+      "ham": 4827,
+      "spam": 747
+    },
+    "label_definitions": {
+      "ham": "non-spam",
+      "spam": "spam; not a verified fraud label"
+    },
+    "file": "uci_sms_web_export.jsonl",
+    "file_sha256": "5a493718c50cb7e0043ff6aafd814a73ddc4c499cee9ec45cd3be5eb5c70365c",
+    "source_export_sha256": "f65c389ce8dd323a7c8c68e1ba00d3f7706bd7b7bb0f456fd6b2f3dec10733b5",
+    "mirror_original_sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+    "byte_identical_to_original": false,
+    "acquisition_transformations": [
+      "Decode web HTML entities once",
+      "Rejoin five unlabelled source continuation lines into preceding records",
+      "Preserve source-line identifiers",
+      "Serialize real labeled records as UTF-8 JSONL"
+    ],
+    "limitations": [
+      "Historical general SMS spam/ham task, not Indian banking fraud",
+      "Mirror was accessed at a mutable main URL; the export is frozen by checksum",
+      "Web export may normalize source whitespace/control characters; it is not byte-identical to the original",
+      "No live-threat status for URLs appearing in the corpus",
+      "No externally verified multilingual or current Indian fraud evaluation"
+    ]
+  },
+  "preprocessing_version": "sms-text-v1",
+  "parameters": {
+    "tfidf": {
+      "ngram_range": [
+        1,
+        2
+      ],
+      "min_df": 2,
+      "sublinear_tf": true,
+      "lowercase": false
+    },
+    "logistic_regression": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "solver": "liblinear",
+      "max_iter": 1000,
+      "random_state": 42
+    }
+  },
+  "preprocessing": {
+    "raw_records": 5574,
+    "conflicting_label_records_removed": 0,
+    "normalized_duplicates_removed": 415,
+    "usable_records": 5159,
+    "usable_class_distribution": {
+      "ham": 4517,
+      "spam": 642
+    },
+    "operations": [
+      "NFKC Unicode normalization",
+      "casefold",
+      "collapse whitespace",
+      "remove conflicting normalized labels",
+      "deduplicate normalized content before splitting"
+    ]
+  },
+  "split": {
+    "method": "StratifiedGroupKFold 5-way outer test fold and 4-way inner validation fold; first folds fixed in advance",
+    "random_state": 42,
+    "inner_random_state": 43,
+    "grouping": "exact normalized text template after replacing URLs and digit sequences",
+    "training_records": 3095,
+    "validation_records": 1032,
+    "test_records": 1032,
+    "training_class_distribution": {
+      "ham": 2710,
+      "spam": 385
+    },
+    "disjoint_groups": true,
+    "disjoint_normalized_content": true,
+    "test_usage": "Untouched holdout; evaluated once after a fixed baseline fit; no tuning or final refit",
+    "splits_file": "sms_splits.json",
+    "splits_sha256": "ce6012fce28d93dcee49928828721b33ee3badf3656218efe0575dfdfc2c852d"
+  },
+  "evaluation": {
+    "validation": {
+      "accuracy": 0.9757751937984496,
+      "precision": 0.9262295081967213,
+      "recall": 0.875968992248062,
+      "f1": 0.900398406374502,
+      "confusion_matrix": [
+        [
+          894,
+          9
+        ],
+        [
+          16,
+          113
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "ham",
+        "spam"
+      ],
+      "false_positive_rate": 0.009966777408637873,
+      "false_negative_rate": 0.12403100775193798,
+      "dataset_size": 1032,
+      "class_distribution": {
+        "spam": 129,
+        "ham": 903
+      }
+    },
+    "test": {
+      "accuracy": 0.9883720930232558,
+      "precision": 0.9328358208955224,
+      "recall": 0.9765625,
+      "f1": 0.9541984732824428,
+      "confusion_matrix": [
+        [
+          895,
+          9
+        ],
+        [
+          3,
+          125
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "ham",
+        "spam"
+      ],
+      "false_positive_rate": 0.00995575221238938,
+      "false_negative_rate": 0.0234375,
+      "dataset_size": 1032,
+      "class_distribution": {
+        "ham": 904,
+        "spam": 128
+      }
+    }
+  },
+  "limitations": [
+    "Historical general SMS spam/ham classification; spam is not equivalent to fraud.",
+    "Not evaluated on Indian banking fraud, current scams, Hindi or other Indian languages.",
+    "Group-separated random holdout is not a chronological or independent external test set.",
+    "Exact URL/number template grouping mitigates, but does not eliminate, near-duplicate campaign leakage.",
+    "Decision-function values are uncalibrated margins, not fraud probabilities or confidence.",
+    "Historical general SMS spam/ham task, not Indian banking fraud",
+    "Mirror was accessed at a mutable main URL; the export is frozen by checksum",
+    "Web export may normalize source whitespace/control characters; it is not byte-identical to the original",
+    "No live-threat status for URLs appearing in the corpus",
+    "No externally verified multilingual or current Indian fraud evaluation"
+  ]
+}

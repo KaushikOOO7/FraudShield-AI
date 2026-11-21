@@ -1,0 +1,1 @@
+"""Stable version-one contracts."""

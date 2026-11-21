@@ -1,0 +1,2 @@
+# Optional static parser. Version/Python support verified on PyPI; not installed here.
+androguard==4.1.4

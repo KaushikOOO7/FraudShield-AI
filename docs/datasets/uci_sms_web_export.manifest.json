@@ -1,0 +1,40 @@
+{
+  "dataset_name": "UCI SMS Spam Collection (web-exported mirror copy)",
+  "original_source": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+  "original_download_url": "https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip",
+  "source_doi": "10.24432/C5CC84",
+  "mirror_url": "https://raw.githubusercontent.com/veermshah/cs6350-sms-spam-dataset/main/SMSSpamCollection",
+  "acquired_at": "2026-11-21T04:22:50.545021+00:00",
+  "version": "2011 collection; 2026-11-21 web-export copy identified by SHA-256",
+  "license": "CC-BY-4.0",
+  "license_source": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+  "attribution": "Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. UCI Machine Learning Repository. DOI: 10.24432/C5CC84.",
+  "acquisition_method": "Connected web tool exported all 5579 displayed source lines; shell DNS prevented original ZIP download.",
+  "record_count": 5574,
+  "class_distribution": {
+    "ham": 4827,
+    "spam": 747
+  },
+  "label_definitions": {
+    "ham": "non-spam",
+    "spam": "spam; not a verified fraud label"
+  },
+  "file": "uci_sms_web_export.jsonl",
+  "file_sha256": "5a493718c50cb7e0043ff6aafd814a73ddc4c499cee9ec45cd3be5eb5c70365c",
+  "source_export_sha256": "f65c389ce8dd323a7c8c68e1ba00d3f7706bd7b7bb0f456fd6b2f3dec10733b5",
+  "mirror_original_sha256": "7d039a24a6083ed9ef0f806ebad56bbb976e3aeb8de05669173bfdc4996c239d",
+  "byte_identical_to_original": false,
+  "acquisition_transformations": [
+    "Decode web HTML entities once",
+    "Rejoin five unlabelled source continuation lines into preceding records",
+    "Preserve source-line identifiers",
+    "Serialize real labeled records as UTF-8 JSONL"
+  ],
+  "limitations": [
+    "Historical general SMS spam/ham task, not Indian banking fraud",
+    "Mirror was accessed at a mutable main URL; the export is frozen by checksum",
+    "Web export may normalize source whitespace/control characters; it is not byte-identical to the original",
+    "No live-threat status for URLs appearing in the corpus",
+    "No externally verified multilingual or current Indian fraud evaluation"
+  ]
+}

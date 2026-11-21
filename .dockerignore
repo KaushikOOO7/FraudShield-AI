@@ -1,0 +1,14 @@
+.git
+.agents
+.codex
+.aws
+.venv*
+.env
+.env.*
+data
+**/__pycache__
+**/.pytest_cache
+**/*.joblib
+**/*.pkl
+**/*.sqlite*
+**/*.log

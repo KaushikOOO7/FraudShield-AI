@@ -1,0 +1,2 @@
+# Optional production driver; release verified on PyPI, not installed/tested here.
+psycopg[binary]==3.3.9

@@ -1,0 +1,2 @@
+# Optional CPU-only XGBoost comparator; verified release, not installed locally.
+xgboost-cpu==3.2.0

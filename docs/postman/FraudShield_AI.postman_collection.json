@@ -1,0 +1,554 @@
+{
+  "info": {
+    "name": "FraudShield AI /api/v1 — actual submissions",
+    "description": "Versioned contracts: docs/API_CONTRACT.md and docs/openapi.json. Set real access-token/redacted-input collection variables and choose actual upload files. No saved responses or users. Optional providers remain unavailable until configured; genuine APK parsing is unverified.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "sms_content",
+      "value": ""
+    },
+    {
+      "key": "submitted_url",
+      "value": ""
+    },
+    {
+      "key": "investigation_id",
+      "value": ""
+    },
+    {
+      "key": "report_description",
+      "value": ""
+    },
+    {
+      "key": "report_id",
+      "value": ""
+    },
+    {
+      "key": "watchlist_id",
+      "value": ""
+    },
+    {
+      "key": "phone_number",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/health",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied.",
+        "auth": {
+          "type": "noauth"
+        }
+      }
+    },
+    {
+      "name": "Verified identity",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/auth/me",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied."
+      }
+    },
+    {
+      "name": "System status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/system/status",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied."
+      }
+    },
+    {
+      "name": "Analyze actual SMS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/analyze/sms",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied. A pre-request script JSON-serializes the actual collection variables, preserving quotes/newlines safely.",
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const submission = {",
+              "  \"content\": pm.collectionVariables.get(\"sms_content\"),",
+              "  \"source\": \"android_share\",",
+              "  \"device_id\": null,",
+              "  \"use_threat_intelligence\": false",
+              "};",
+              "pm.variables.set('request_body', JSON.stringify(submission));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const result = pm.response.json();",
+              "  pm.test('Actual investigation ID returned', () => pm.expect(result.investigation_id).to.be.a('string'));",
+              "  pm.test('Risk score remains unavailable', () => pm.expect(result.assessment.risk_score).to.eql(null));",
+              "  pm.collectionVariables.set('investigation_id', result.investigation_id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyze actual URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/analyze/url",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied. A pre-request script JSON-serializes the actual collection variables, preserving quotes/newlines safely.",
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const submission = {",
+              "  \"url\": pm.collectionVariables.get(\"submitted_url\"),",
+              "  \"source\": \"android_share\",",
+              "  \"use_threat_intelligence\": false",
+              "};",
+              "pm.variables.set('request_body', JSON.stringify(submission));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const result = pm.response.json();",
+              "  pm.test('Actual investigation ID returned', () => pm.expect(result.investigation_id).to.be.a('string'));",
+              "  pm.test('Risk score remains unavailable', () => pm.expect(result.assessment.risk_score).to.eql(null));",
+              "  pm.collectionVariables.set('investigation_id', result.investigation_id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Investigation history",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/investigations?limit=20&offset=0",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied."
+      }
+    },
+    {
+      "name": "Read actual investigation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/investigations/{{investigation_id}}",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied."
+      }
+    },
+    {
+      "name": "Delete actual investigation",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/api/v1/investigations/{{investigation_id}}",
+        "description": "Use real authenticated, redacted submissions. Empty variables must be configured; no dummy records or predictions are supplied."
+      }
+    },
+    {
+      "name": "Create actual unreviewed report",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/reports",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied. A pre-request script JSON-serializes the actual collection variables, preserving quotes/newlines safely.",
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const submission = {",
+              "  \"subject_type\": \"url\",",
+              "  \"subject\": pm.collectionVariables.get(\"submitted_url\"),",
+              "  \"description\": pm.collectionVariables.get(\"report_description\")",
+              "};",
+              "pm.variables.set('request_body', JSON.stringify(submission));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if ([200,201].includes(pm.response.code)) pm.collectionVariables.set('report_id', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Owner reports",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/reports?limit=20&offset=0",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Read actual report",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/reports/{{report_id}}",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Add actual watchlist entry",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/watchlist",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied. A pre-request script JSON-serializes the actual collection variables, preserving quotes/newlines safely.",
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const submission = {",
+              "  \"indicator_type\": \"url\",",
+              "  \"value\": pm.collectionVariables.get(\"submitted_url\")",
+              "};",
+              "pm.variables.set('request_body', JSON.stringify(submission));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if ([200,201].includes(pm.response.code)) pm.collectionVariables.set('watchlist_id', pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Owner watchlist",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/watchlist?limit=20&offset=0",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Delete actual watchlist entry",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{base_url}}/api/v1/watchlist/{{watchlist_id}}",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Actual alert history",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/api/v1/alerts",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Explicit alert-history preference",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/alerts/preferences",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"high_risk_alerts\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Correlate actual stored observations",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{base_url}}/api/v1/investigations/{{investigation_id}}/correlate?limit=20",
+        "description": "Provide actual authenticated data; no fabricated record or verified allegation is supplied."
+      }
+    },
+    {
+      "name": "Analyze actual QR image",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{base_url}}/api/v1/analyze/qr",
+        "description": "Choose your actual PNG/JPEG file in the file field. Default limit 2 MiB. No decoded payload or fraud prediction is supplied; provider opt-in defaults false.",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": null
+            },
+            {
+              "key": "source",
+              "type": "text",
+              "value": "android_share"
+            },
+            {
+              "key": "use_threat_intelligence",
+              "type": "text",
+              "value": "false"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const result = pm.response.json();",
+              "  pm.test('Actual investigation ID returned', () => pm.expect(result.investigation_id).to.be.a('string'));",
+              "  pm.test('Risk score remains unavailable', () => pm.expect(result.assessment.risk_score).to.eql(null));",
+              "  pm.collectionVariables.set('investigation_id', result.investigation_id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analyze actual caller format",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/analyze/caller",
+        "description": "Set phone_number to an actual permitted submission. Output is masked format analysis only; caller reputation is unavailable. A pre-request script JSON-serializes the actual collection variables, preserving quotes/newlines safely.",
+        "body": {
+          "mode": "raw",
+          "raw": "{{request_body}}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const submission = {",
+              "  \"phone_number\": pm.collectionVariables.get(\"phone_number\"),",
+              "  \"source\": \"android_share\"",
+              "};",
+              "pm.variables.set('request_body', JSON.stringify(submission));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const result = pm.response.json();",
+              "  pm.test('Actual investigation ID returned', () => pm.expect(result.investigation_id).to.be.a('string'));",
+              "  pm.test('Risk score remains unavailable', () => pm.expect(result.assessment.risk_score).to.eql(null));",
+              "  pm.collectionVariables.set('investigation_id', result.investigation_id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Guarded actual APK upload",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{base_url}}/api/v1/analyze/apk",
+        "description": "Choose an actual APK file. Default cap 20 MiB. Guards are tested; current missing Androguard returns 503 apk_parser_unavailable with no investigation. Genuine static parsing is unverified.",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": null,
+              "contentType": "application/vnd.android.package-archive"
+            },
+            {
+              "key": "source",
+              "type": "text",
+              "value": "android_share"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const result = pm.response.json();",
+              "  pm.test('Actual investigation ID returned', () => pm.expect(result.investigation_id).to.be.a('string'));",
+              "  pm.test('Risk score remains unavailable', () => pm.expect(result.assessment.risk_score).to.eql(null));",
+              "  pm.collectionVariables.set('investigation_id', result.investigation_id);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Optional selection of existing evidence",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/api/v1/investigations/{{investigation_id}}/interpret",
+        "description": "Use an actual owned investigation ID. Enable use_gemini only with explicit user opt-in. Model selects validated existing references only; no new factual claims or scores. Missing configuration gives provider_not_configured. No live Gemini success has been verified.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"use_gemini\": false\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

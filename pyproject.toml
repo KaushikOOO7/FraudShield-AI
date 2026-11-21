@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+addopts = "-ra --strict-markers"
+markers = [
+  "model: exercises the genuine trained SMS artifact",
+  "postgres: requires a disposable PostgreSQL database",
+]
+filterwarnings = ["error::ResourceWarning"]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100

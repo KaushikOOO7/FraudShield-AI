@@ -1,0 +1,21 @@
+# Development only. Real Supabase Auth configuration is still required.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    environment:
+      SMS_MODEL_DIR: /models
+      URL_MODEL_DIR: /models
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - fraudshield_data:/app/data
+      - ./backend/app/ml/models:/models:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+volumes:
+  fraudshield_data:
